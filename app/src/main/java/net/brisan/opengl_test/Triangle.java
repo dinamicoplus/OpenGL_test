@@ -15,12 +15,12 @@ public class Triangle {
     static final int COORDS_PER_VERTEX = 3;
     static float triangleCoords[] = {   // in counterclockwise order:
             -0.5f, -0.5f,  0.5f,
-            0.5f, -0.5f,  0.5f,
-            0.5f,  0.5f,  0.5f,
+             0.5f, -0.5f,  0.5f,
+             0.5f,  0.5f,  0.5f,
             -0.5f,  0.5f,  0.5f,
             -0.5f, -0.5f, -0.5f,
-            0.5f, -0.5f, -0.5f,
-            0.5f,  0.5f, -0.5f,
+             0.5f, -0.5f, -0.5f,
+             0.5f,  0.5f, -0.5f,
             -0.5f,  0.5f, -0.5f
     };
     static float triangleColors[] = {   // in counterclockwise order:
@@ -179,7 +179,5 @@ public class Triangle {
         // Disable vertex array
         GLES20.glDisableVertexAttribArray(vPositionHandle);
         GLES20.glDisableVertexAttribArray(vColorHandle);
-
-        //Log.i("mProgram: ", GLES20.glGetProgramInfoLog(mProgram));
     }
 }
