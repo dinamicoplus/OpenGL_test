@@ -129,7 +129,7 @@ public class Triangle {
 
     }
 
-    public void draw(float[] mvpMatrix, float[] color, float[] resolution) {
+    public void draw(float[] mvpMatrix, float[] resolution) {
         // Add program to OpenGL ES environment
         GLES20.glUseProgram(mProgram);
 
@@ -156,9 +156,6 @@ public class Triangle {
                 0,
                 0
         );
-
-        //  Uniform Color
-        GLES20.glUniform4fv(fColorHandle, 1, color, 0);
 
         //  Uniform Resolution
         GLES20.glUniform2fv(fResolutionHandle, 1, resolution, 0);

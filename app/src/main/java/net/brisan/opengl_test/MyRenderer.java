@@ -9,6 +9,7 @@ import android.util.Log;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
+
 public class MyRenderer implements GLSurfaceView.Renderer {
 
     private static final String TAG = "MyGLRenderer";
@@ -18,6 +19,8 @@ public class MyRenderer implements GLSurfaceView.Renderer {
     private float[] mMVPMatrix = new float[16];
     private float[] mRotationMatrix = new float[16];
     private float[] resolution = new float[2];
+
+    public static float mAngle;
 
     public static int loadShader(int type, String shaderCode) {
 
@@ -92,7 +95,7 @@ public class MyRenderer implements GLSurfaceView.Renderer {
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT|GLES20.GL_DEPTH_BUFFER_BIT);
 
         // Set the rotation matrix
-        Matrix.setRotateM(mRotationMatrix, 0, angle, angle * 0.5f, angle * 0.5f, 1.0f);
+        Matrix.setRotateM(mRotationMatrix, 0, mAngle, 1.0f, 1.0f, 1.0f);
 
         // Set the camera position (View matrix)
         Matrix.setLookAtM(mViewMatrix, 0, 0, 0, -3, 0f, 0f, 0f, 0f, 1.0f, 0.0f);
@@ -110,6 +113,16 @@ public class MyRenderer implements GLSurfaceView.Renderer {
 
 
         // Draw triangle
-        mTriangle.draw(scratch,color,resolution);
+        mTriangle.draw(scratch,resolution);
+    }
+
+    public static void setAngle(float angle)
+    {
+        mAngle = angle;
+    }
+
+    public static float getAngle()
+    {
+        return mAngle;
     }
 }
