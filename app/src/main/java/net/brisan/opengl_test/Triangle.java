@@ -10,46 +10,7 @@ import java.nio.ShortBuffer;
 
 import static net.brisan.opengl_test.MyRenderer.loadShader;
 
-/**
- * Created by marcos on 27/09/14.
- */
 public class Triangle {
-
-    private FloatBuffer vertexBuffer;
-    private FloatBuffer colorBuffer;
-    private ShortBuffer elemBuffer;
-    int [] buffers = new int[3];
-
-    private final int mProgram;
-    private int vPositionHandle;
-    private int vColorHandle;
-    private int vMVPMatrixHandle;
-    private int fColorHandle;
-    private int fResolutionHandle;
-    private int fTimeHandle;
-
-    private final String vertexShaderCode =
-            // This matrix member variable provides a hook to manipulate
-            // the coordinates of the objects that use this vertex shader
-            "uniform mat4 vMVPMatrix;" +
-                    "attribute vec4 vPosition;" +
-                    "attribute vec3 vColor;" +
-                    "varying vec3 fColor;" +
-                    "void main() {" +
-                    "   gl_Position = vMVPMatrix * vPosition;" +
-                    "   fColor = vColor;" +
-                    "}";
-
-
-    private final String fragmentShaderCode =
-            "precision mediump float;" +
-                    "uniform vec2 fResolution;" +
-                    "uniform float fTime;" +
-                    "varying vec3 fColor;" +
-                    "void main()" +
-                    "{" +
-                    "   gl_FragColor = vec4(fColor,1.0);" +
-                    "}";
 
     static final int COORDS_PER_VERTEX = 3;
     static float triangleCoords[] = {   // in counterclockwise order:
@@ -72,7 +33,6 @@ public class Triangle {
             1.0f, 1.0f, 0.0f,
             1.0f, 1.0f, 1.0f
     };
-
     static short triangleElements[] = {
             // front
             0, 1, 2,
@@ -93,12 +53,36 @@ public class Triangle {
             1, 5, 6,
             6, 2, 1
     };
-    private final int vertexCount = triangleCoords.length / COORDS_PER_VERTEX;
-    private final int vertexStride = COORDS_PER_VERTEX * 4; // 4 bytes per vertex
-    // Set color with red, green, blue and alpha (opacity) values
-
+    private final int mProgram;
+    private final String vertexShaderCode =
+            // This matrix member variable provides a hook to manipulate
+            // the coordinates of the objects that use this vertex shader
+            "uniform mat4 vMVPMatrix;" +
+                    "attribute vec4 vPosition;" +
+                    "attribute vec3 vColor;" +
+                    "varying vec3 fColor;" +
+                    "void main() {" +
+                    "   gl_Position = vMVPMatrix * vPosition;" +
+                    "   fColor = vColor;" +
+                    "}";
     int vertexShader = loadShader(GLES20.GL_VERTEX_SHADER, vertexShaderCode);
+    private final String fragmentShaderCode =
+            "precision mediump float;" +
+                    "uniform vec2 fResolution;" +
+                    "uniform float fTime;" +
+                    "varying vec3 fColor;" +
+                    "void main()" +
+                    "{" +
+                    "   gl_FragColor = vec4(fColor,1.0);" +
+                    "}";
     int fragmentShader = loadShader(GLES20.GL_FRAGMENT_SHADER, fragmentShaderCode);
+    int [] buffers = new int[3];
+    private int vPositionHandle;
+    private int vColorHandle;
+    private int vMVPMatrixHandle;
+    private int fColorHandle;
+    private int fResolutionHandle;
+    private int fTimeHandle;
 
 
     public Triangle() {
@@ -108,7 +92,7 @@ public class Triangle {
         GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, buffers[0]);
         ByteBuffer bb = ByteBuffer.allocateDirect(triangleCoords.length * 4);
         bb.order(ByteOrder.nativeOrder());
-        vertexBuffer = bb.asFloatBuffer();
+        FloatBuffer vertexBuffer = bb.asFloatBuffer();
         vertexBuffer.put(triangleCoords);
         vertexBuffer.position(0);
         GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, vertexBuffer.capacity() * 4, vertexBuffer, GLES20.GL_STATIC_DRAW);
@@ -116,7 +100,7 @@ public class Triangle {
         GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, buffers[1]);
         ByteBuffer bbcolor = ByteBuffer.allocateDirect(triangleColors.length * 4);
         bbcolor.order(ByteOrder.nativeOrder());
-        colorBuffer = bbcolor.asFloatBuffer();
+        FloatBuffer colorBuffer = bbcolor.asFloatBuffer();
         colorBuffer.put(triangleColors);
         colorBuffer.position(0);
         GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, colorBuffer.capacity() * 4, colorBuffer, GLES20.GL_STATIC_DRAW);
@@ -125,7 +109,7 @@ public class Triangle {
         GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, buffers[2]);
         ByteBuffer bbelem = ByteBuffer.allocateDirect(triangleElements.length * 2);
         bbelem.order(ByteOrder.nativeOrder());
-        elemBuffer = bbelem.asShortBuffer();
+        ShortBuffer elemBuffer = bbelem.asShortBuffer();
         elemBuffer.put(triangleElements);
         elemBuffer.position(0);
         GLES20.glBufferData(GLES20.GL_ELEMENT_ARRAY_BUFFER, elemBuffer.capacity() * 2, elemBuffer, GLES20.GL_STATIC_DRAW);
