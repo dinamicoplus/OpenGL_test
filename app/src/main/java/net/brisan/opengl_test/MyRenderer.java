@@ -13,7 +13,7 @@ import javax.microedition.khronos.opengles.GL10;
 public class MyRenderer implements GLSurfaceView.Renderer {
 
     private static final String TAG = "MyGLRenderer";
-    private Triangle mTriangle;
+    private Cube mCube;
     private float[] mProjectionMatrix = new float[16];
     private float[] mViewMatrix = new float[16];
     private float[] mMVPMatrix = new float[16];
@@ -21,6 +21,7 @@ public class MyRenderer implements GLSurfaceView.Renderer {
     private float[] resolution = new float[2];
 
     public static float mAngle;
+    public static double vel = 0.0;
 
     public static int loadShader(int type, String shaderCode) {
 
@@ -65,7 +66,7 @@ public class MyRenderer implements GLSurfaceView.Renderer {
     public void onSurfaceCreated(GL10 gl10, EGLConfig eglConfig) {
         GLES20.glEnable(GLES20.GL_DEPTH_TEST);
         GLES20.glClearColor(1.0f, 0.4f, 0.4f, 1.0f);
-        mTriangle = new Triangle();
+        mCube = new Cube();
 
     }
 
@@ -88,9 +89,7 @@ public class MyRenderer implements GLSurfaceView.Renderer {
     public void onDrawFrame(GL10 gl10) {
 
         float[] scratch = new float[16];
-        long time = SystemClock.uptimeMillis() % 4000L;
-        float angle = 0.090f * ((int) time);
-        float[] color = {1.0f,0.2f,0.0f};
+        //float angle = 0.090f * ((int) time);
 
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT|GLES20.GL_DEPTH_BUFFER_BIT);
 
@@ -99,11 +98,12 @@ public class MyRenderer implements GLSurfaceView.Renderer {
 
         // Set the camera position (View matrix)
         Matrix.setLookAtM(mViewMatrix, 0, 0, 0, -3, 0f, 0f, 0f, 0f, 1.0f, 0.0f);
+        //-----------------------------Pos. Camara--P. de mira--Dir. de pie-----
 
         // Calculate the projection and view transformation
         Matrix.multiplyMM(mMVPMatrix, 0, mProjectionMatrix, 0, mViewMatrix, 0);
 
-        //mTriangle.draw(mMVPMatrix,color);
+        //mCube.draw(mMVPMatrix,color);
 
         // Combine the rotation matrix with the projection and camera view
         // Note that the mMVPMatrix factor *must be first* in order
@@ -112,8 +112,11 @@ public class MyRenderer implements GLSurfaceView.Renderer {
 
 
 
-        // Draw triangle
-        mTriangle.draw(scratch,resolution);
+        // Draw Cube
+        mCube.draw(scratch,resolution);
+        vel *= 0.99;
+        setAngle((float) (getAngle() + (vel * 180.0 /320)));
+
     }
 
     public static void setAngle(float angle)

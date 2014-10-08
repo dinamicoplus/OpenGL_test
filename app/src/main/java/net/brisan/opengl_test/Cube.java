@@ -10,10 +10,10 @@ import java.nio.ShortBuffer;
 
 import static net.brisan.opengl_test.MyRenderer.loadShader;
 
-public class Triangle {
+public class Cube {
 
     static final int COORDS_PER_VERTEX = 3;
-    static float triangleCoords[] = {   // in counterclockwise order:
+    static float cubeCoords[] = {   // in counterclockwise order:
             -0.5f, -0.5f,  0.5f,
              0.5f, -0.5f,  0.5f,
              0.5f,  0.5f,  0.5f,
@@ -23,7 +23,7 @@ public class Triangle {
              0.5f,  0.5f, -0.5f,
             -0.5f,  0.5f, -0.5f
     };
-    static float triangleColors[] = {   // in counterclockwise order:
+    static float cubeColors[] = {   // in counterclockwise order:
             0.0f, 0.0f, 0.0f,
             0.0f, 0.0f, 1.0f,
             0.0f, 1.0f, 0.0f,
@@ -33,7 +33,7 @@ public class Triangle {
             1.0f, 1.0f, 0.0f,
             1.0f, 1.0f, 1.0f
     };
-    static short triangleElements[] = {
+    static short cubeElements[] = {
             // front
             0, 1, 2,
             2, 3, 0,
@@ -85,32 +85,32 @@ public class Triangle {
     private int fTimeHandle;
 
 
-    public Triangle() {
+    public Cube() {
         GLES20.glGenBuffers(3,buffers,0);
 
         // initialize vertex byte buffer for shape coordinates
         GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, buffers[0]);
-        ByteBuffer bb = ByteBuffer.allocateDirect(triangleCoords.length * 4);
+        ByteBuffer bb = ByteBuffer.allocateDirect(cubeCoords.length * 4);
         bb.order(ByteOrder.nativeOrder());
         FloatBuffer vertexBuffer = bb.asFloatBuffer();
-        vertexBuffer.put(triangleCoords);
+        vertexBuffer.put(cubeCoords);
         vertexBuffer.position(0);
         GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, vertexBuffer.capacity() * 4, vertexBuffer, GLES20.GL_STATIC_DRAW);
 
         GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, buffers[1]);
-        ByteBuffer bbcolor = ByteBuffer.allocateDirect(triangleColors.length * 4);
+        ByteBuffer bbcolor = ByteBuffer.allocateDirect(cubeColors.length * 4);
         bbcolor.order(ByteOrder.nativeOrder());
         FloatBuffer colorBuffer = bbcolor.asFloatBuffer();
-        colorBuffer.put(triangleColors);
+        colorBuffer.put(cubeColors);
         colorBuffer.position(0);
         GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, colorBuffer.capacity() * 4, colorBuffer, GLES20.GL_STATIC_DRAW);
 
 
         GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, buffers[2]);
-        ByteBuffer bbelem = ByteBuffer.allocateDirect(triangleElements.length * 2);
+        ByteBuffer bbelem = ByteBuffer.allocateDirect(cubeElements.length * 2);
         bbelem.order(ByteOrder.nativeOrder());
         ShortBuffer elemBuffer = bbelem.asShortBuffer();
-        elemBuffer.put(triangleElements);
+        elemBuffer.put(cubeElements);
         elemBuffer.position(0);
         GLES20.glBufferData(GLES20.GL_ELEMENT_ARRAY_BUFFER, elemBuffer.capacity() * 2, elemBuffer, GLES20.GL_STATIC_DRAW);
 
@@ -169,8 +169,8 @@ public class Triangle {
         MyRenderer.checkGlError("glUniformMatrix4fv");
 
         GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, buffers[2]);
-        GLES20.glDrawElements(GLES20.GL_TRIANGLES, triangleElements.length, GLES20.GL_UNSIGNED_SHORT, 0);
-        //  Draw the triangle
+        GLES20.glDrawElements(GLES20.GL_TRIANGLES, cubeElements.length, GLES20.GL_UNSIGNED_SHORT, 0);
+        //  Draw the cube
         //GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP, 0, vertexCount);
 
         // Disable vertex array

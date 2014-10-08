@@ -2,13 +2,13 @@ package net.brisan.opengl_test;
 
 import android.content.Context;
 import android.opengl.GLSurfaceView;
+import android.util.Log;
 import android.view.MotionEvent;
 
 class MyGLSurfaceView extends GLSurfaceView {
 
     private float mPreviousX;
     private float mPreviousY;
-    private float vel;
 
     public MyGLSurfaceView(Context context) {
         super(context);
@@ -17,7 +17,7 @@ class MyGLSurfaceView extends GLSurfaceView {
         setRenderer(new MyRenderer());
 
         //Render solo cuando cambia algo en la pantalla
-        setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
+        //setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
 
     }
 
@@ -36,7 +36,7 @@ class MyGLSurfaceView extends GLSurfaceView {
                 float dx = x - mPreviousX;
                 float dy = y - mPreviousY;
 
-                /*
+
                 // reverse direction of rotation above the mid-line
                 if (y > getHeight() / 2) {
                     dx = dx * -1 ;
@@ -45,11 +45,14 @@ class MyGLSurfaceView extends GLSurfaceView {
                 // reverse direction of rotation to left of the mid-line
                 if (x < getWidth() / 2) {
                     dy = dy * -1 ;
-                }*/
-
-                MyRenderer.setAngle(
-                        (float) (MyRenderer.getAngle() + ((dx + dy) * 180.0 /320)));  // = 180.0f / 320
-                requestRender();
+                }
+                Log.i("x: ", ""+ x);
+                Log.i("y: ", ""+ y);
+                Log.i("dx: ", ""+ dx);
+                Log.i("dy: ", ""+ dy);
+                MyRenderer.vel = (dx + dy);
+                 // = 180.0f / 320
+                //requestRender();
         }
 
         mPreviousX = x;
