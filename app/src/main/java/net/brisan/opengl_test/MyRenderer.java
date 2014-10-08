@@ -56,7 +56,7 @@ public class MyRenderer implements GLSurfaceView.Renderer {
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT|GLES20.GL_DEPTH_BUFFER_BIT);
 
         // Set the rotation matrix
-        Matrix.setRotateM(mRotationMatrix, 0, angle, 1.0f, 1.0f, -1.0f);
+        Matrix.setRotateM(mRotationMatrix, 0, angle, angle * 0.5f, angle * 0.5f, 1.0f);
 
         // Set the camera position (View matrix)
         Matrix.setLookAtM(mViewMatrix, 0, 0, 0, -3, 0f, 0f, 0f, 0f, 1.0f, 0.0f);

@@ -55,7 +55,7 @@ public class Triangle {
     static float triangleCoords[] = {   // in counterclockwise order:
             -0.5f, -0.5f,  0.5f,
             0.5f, -0.5f,  0.5f,
-            0.5f,  0.5f,  1.5f,
+            0.5f,  0.5f,  0.5f,
             -0.5f,  0.5f,  0.5f,
             -0.5f, -0.5f, -0.5f,
             0.5f, -0.5f, -0.5f,
@@ -63,14 +63,14 @@ public class Triangle {
             -0.5f,  0.5f, -0.5f
     };
     static float triangleColors[] = {   // in counterclockwise order:
-            1.0f, 1.0f, 0.0f,
-            1.0f, 1.0f, 0.0f,
-            1.0f, 1.0f, 0.0f,
-            1.0f, 1.0f, 0.0f,
+            0.0f, 0.0f, 0.0f,
             0.0f, 0.0f, 1.0f,
-            0.0f, 0.0f, 1.0f,
-            0.0f, 0.0f, 1.0f,
-            0.0f, 0.0f, 1.0f
+            0.0f, 1.0f, 0.0f,
+            0.0f, 1.0f, 1.0f,
+            1.0f, 0.0f, 0.0f,
+            1.0f, 0.0f, 1.0f,
+            1.0f, 1.0f, 0.0f,
+            1.0f, 1.0f, 1.0f
     };
 
     static short triangleElements[] = {
