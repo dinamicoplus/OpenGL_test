@@ -1,8 +1,13 @@
 package net.brisan.opengl_test;
 
+import android.content.Context;
 import android.opengl.GLES20;
 import android.os.SystemClock;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
@@ -11,7 +16,7 @@ import java.nio.ShortBuffer;
 import static net.brisan.opengl_test.MyRenderer.loadShader;
 
 public class Cube {
-
+    //TODO Funcion que extraiga de un .obj la información del objeto
     static final int COORDS_PER_VERTEX = 3;
     static float cubeCoords[] = {   // in counterclockwise order:
             -0.5f, -0.5f,  0.5f,
@@ -53,34 +58,20 @@ public class Cube {
             1, 5, 6,
             6, 2, 1
     };
-    private final int mProgram;
-    private final String vertexShaderCode =
-            // This matrix member variable provides a hook to manipulate
-            // the coordinates of the objects that use this vertex shader
-            "uniform mat4 vMVPMatrix;" +
-                    "attribute vec4 vPosition;" +
-                    "attribute vec3 vColor;" +
-                    "varying vec3 fColor;" +
-                    "void main() {" +
-                    "   gl_Position = vMVPMatrix * vPosition;" +
-                    "   fColor = vColor;" +
-                    "}";
+
+    public static Context c;
+
+    private final String vertexShaderCode = readRawTextFile(c,R.raw.vertexshader);
     int vertexShader = loadShader(GLES20.GL_VERTEX_SHADER, vertexShaderCode);
-    private final String fragmentShaderCode =
-            "precision mediump float;" +
-                    "uniform vec2 fResolution;" +
-                    "uniform float fTime;" +
-                    "varying vec3 fColor;" +
-                    "void main()" +
-                    "{" +
-                    "   gl_FragColor = vec4(fColor,1.0);" +
-                    "}";
+
+    private final String fragmentShaderCode = readRawTextFile(c,R.raw.fragmentshader);
     int fragmentShader = loadShader(GLES20.GL_FRAGMENT_SHADER, fragmentShaderCode);
+
+    private final int mProgram;
     int [] buffers = new int[3];
     private int vPositionHandle;
     private int vColorHandle;
     private int vMVPMatrixHandle;
-    private int fColorHandle;
     private int fResolutionHandle;
     private int fTimeHandle;
 
@@ -121,7 +112,6 @@ public class Cube {
 
         vPositionHandle = GLES20.glGetAttribLocation(mProgram, "vPosition");
         vColorHandle = GLES20.glGetAttribLocation(mProgram, "vColor");
-        fColorHandle = GLES20.glGetUniformLocation(mProgram, "fColor");
         fResolutionHandle = GLES20.glGetUniformLocation(mProgram, "fResolution");
         fTimeHandle = GLES20.glGetUniformLocation(mProgram, "fTime");
         vMVPMatrixHandle = GLES20.glGetUniformLocation(mProgram, "vMVPMatrix");
@@ -176,5 +166,25 @@ public class Cube {
         // Disable vertex array
         GLES20.glDisableVertexAttribArray(vPositionHandle);
         GLES20.glDisableVertexAttribArray(vColorHandle);
+    }
+
+    public static String readRawTextFile(Context ctx, int resId)
+    {
+        InputStream inputStream = ctx.getResources().openRawResource(resId);
+
+        InputStreamReader inputreader = new InputStreamReader(inputStream);
+        BufferedReader buffreader = new BufferedReader(inputreader);
+        String line;
+        StringBuilder text = new StringBuilder();
+
+        try {
+            while (( line = buffreader.readLine()) != null) {
+                text.append(line);
+                text.append('\n');
+            }
+        } catch (IOException e) {
+            return null;
+        }
+        return text.toString();
     }
 }

@@ -14,5 +14,6 @@ public class OpenGLActivity extends Activity {
         // as the ContentView for this Activity.
         GLSurfaceView mGLView = new MyGLSurfaceView(this);
         setContentView(mGLView);
+        Cube.c = this.getApplicationContext();
     }
 }

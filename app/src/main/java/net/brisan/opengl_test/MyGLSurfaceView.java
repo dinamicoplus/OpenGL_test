@@ -60,6 +60,4 @@ class MyGLSurfaceView extends GLSurfaceView {
         return true;
     }
 
-
-
 }
