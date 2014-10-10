@@ -14,6 +14,7 @@ import java.nio.FloatBuffer;
 import java.nio.ShortBuffer;
 
 import static net.brisan.opengl_test.MyRenderer.loadShader;
+//TODO Separar el código que se aplica a todos los objetos de la escena con los que sean del cubo concretamente
 
 public class Cube {
     //TODO Funcion que extraiga de un .obj la información del objeto
@@ -158,10 +159,10 @@ public class Cube {
         GLES20.glUniformMatrix4fv(vMVPMatrixHandle, 1, false, mvpMatrix, 0); //  Set MVPMatrix as mvpMatrix
         MyRenderer.checkGlError("glUniformMatrix4fv");
 
-        GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, buffers[2]);
-        GLES20.glDrawElements(GLES20.GL_TRIANGLES, cubeElements.length, GLES20.GL_UNSIGNED_SHORT, 0);
         //  Draw the cube
         //GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP, 0, vertexCount);
+        GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, buffers[2]);
+        GLES20.glDrawElements(GLES20.GL_TRIANGLES, cubeElements.length, GLES20.GL_UNSIGNED_SHORT, 0);
 
         // Disable vertex array
         GLES20.glDisableVertexAttribArray(vPositionHandle);
