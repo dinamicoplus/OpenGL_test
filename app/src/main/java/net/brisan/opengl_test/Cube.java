@@ -14,7 +14,8 @@ import java.nio.FloatBuffer;
 import java.nio.ShortBuffer;
 
 import static net.brisan.opengl_test.MyRenderer.loadShader;
-//TODO Separar el código que se aplica a todos los objetos de la escena con los que sean del cubo concretamente
+
+//TODO Separar el código que se aplica a todos los objetos de la escena con los que sean del cubo. Convertir a clase Scene
 
 public class Cube {
     //TODO Funcion que extraiga de un .obj la información del objeto
@@ -120,6 +121,7 @@ public class Cube {
     }
 
     public void draw(float[] mvpMatrix, float[] resolution) {
+        //TODO Añadir texturas a los objectos
         // Add program to OpenGL ES environment
         GLES20.glUseProgram(mProgram);
 
@@ -167,7 +169,7 @@ public class Cube {
         GLES20.glDisableVertexAttribArray(vPositionHandle);
         GLES20.glDisableVertexAttribArray(vColorHandle);
     }
-
+//TODO Colocar esta funcion en una clase Utils
     public static String readRawTextFile(Context ctx, int resId)
     {
         InputStream inputStream = ctx.getResources().openRawResource(resId);

@@ -9,6 +9,8 @@ import android.util.Log;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
+//TODO Colocar los metodos loadShader y checkGLerror en una clase Utils
+//TODO Fusionar la parte de escena de la clase Cube con la de la clase MyRenderer
 
 public class MyRenderer implements GLSurfaceView.Renderer {
 
