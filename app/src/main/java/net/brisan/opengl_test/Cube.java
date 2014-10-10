@@ -60,12 +60,11 @@ public class Cube {
             6, 2, 1
     };
 
-    public static Context c;
 
-    private final String vertexShaderCode = readRawTextFile(c,R.raw.vertexshader);
+    private final String vertexShaderCode = readRawTextFile(OpenGLActivity.c,R.raw.vertexshader);
     int vertexShader = loadShader(GLES20.GL_VERTEX_SHADER, vertexShaderCode);
 
-    private final String fragmentShaderCode = readRawTextFile(c,R.raw.fragmentshader);
+    private final String fragmentShaderCode = readRawTextFile(OpenGLActivity.c,R.raw.fragmentshader);
     int fragmentShader = loadShader(GLES20.GL_FRAGMENT_SHADER, fragmentShaderCode);
 
     private final int mProgram;
