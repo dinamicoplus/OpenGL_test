@@ -75,6 +75,8 @@ public class Cube {
     private int vMVPMatrixHandle;
     private int fResolutionHandle;
     private int fTimeHandle;
+    private float[] mMVPMatrix;     //No se si he de tener un campo para la MVPMatrix y otro para el handle
+    private float[] mResolution;
 
 
     public Cube() {
@@ -120,7 +122,7 @@ public class Cube {
 
     }
 
-    public void draw(float[] mvpMatrix, float[] resolution) {
+    public void draw() {
         //TODO Añadir texturas a los objectos
         // Add program to OpenGL ES environment
         GLES20.glUseProgram(mProgram);
@@ -150,14 +152,14 @@ public class Cube {
         );
 
         //  Uniform Resolution
-        GLES20.glUniform2fv(fResolutionHandle, 1, resolution, 0);
+        GLES20.glUniform2fv(fResolutionHandle, 1, mResolution, 0);
 
         //  Uniform Time
         float time = (float)(SystemClock.uptimeMillis());
         GLES20.glUniform1f(fTimeHandle, time);
 
         //  Uniform MVPMatrix
-        GLES20.glUniformMatrix4fv(vMVPMatrixHandle, 1, false, mvpMatrix, 0); //  Set MVPMatrix as mvpMatrix
+        GLES20.glUniformMatrix4fv(vMVPMatrixHandle, 1, false, mMVPMatrix, 0); //  Set MVPMatrix as mvpMatrix
         MyRenderer.checkGlError("glUniformMatrix4fv");
 
         //  Draw the cube
@@ -188,5 +190,15 @@ public class Cube {
             return null;
         }
         return text.toString();
+    }
+
+    public void setMVPMatrix(float[] mvpMatrix)
+    {
+        mMVPMatrix = mvpMatrix;
+    }
+
+    public void setResolution(float[] resolution)
+    {
+        mResolution = resolution;
     }
 }

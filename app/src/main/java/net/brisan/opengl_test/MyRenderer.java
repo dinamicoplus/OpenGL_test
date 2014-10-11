@@ -113,9 +113,10 @@ public class MyRenderer implements GLSurfaceView.Renderer {
         Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, mRotationMatrix, 0);
 
 
-
+        mCube.setMVPMatrix(scratch);
+        mCube.setResolution(resolution);
         // Draw Cube
-        mCube.draw(scratch,resolution);
+        mCube.draw();
         vel *= 0.99;
         setAngle((float) (getAngle() + (vel * 180.0 /320)));
 
